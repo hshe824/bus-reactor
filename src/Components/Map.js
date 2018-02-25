@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import ReactMapGL, { Marker, Popup, experimental,NavigationControl} from 'react-map-gl';
-
-// var MappleToolTip = require('reactjs-mappletooltip');
+import Legend from './legend';
 import MappleToolTip from 'reactjs-mappletooltip';
 const request = require('superagent');
+
+
+
 
 const ACCESS_TOKEN = 'pk.eyJ1IjoicnlzaG56IiwiYSI6ImNqZTIwbWljdTFlOXMycXFseXdoZTdhMHoifQ.EaRv0yYowqeNviNdcgL-PQ' // Mapbox access token
 const TRANSLINK_API_URL = 'http://api.translink.ca/rttiapi/v1/buses?apikey=iE0h8jkaEpNFmV7PrYXG';
 
 class Map extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: this.props.width || window.innerWidth,
+        height: this.props.height || window.innerHeight,
         latitude: 49.237368,
         longitude: -123.117362,
         zoom: 11
@@ -39,23 +41,10 @@ class Map extends Component {
         onViewportChange={viewport => {
           this.setState({ viewport })
         }}>
-        <div style={{position: 'absolute', right: 0}}>
-          <NavigationControl onViewportChange={viewport => {
-          this.setState({ viewport })
-        }} />
-        </div>
+       
 
         {this.state.busDataArray.map((busData, index) => (
-          
-          // <MappleToolTip key={index} float={true} mappleType={'ching'}>
-          //     <div>
-          //     </div>
-          //     <div>
-          //       Route #: {busData.routeNo} <br />
-          //       Dir: {busData.direction}<br />
-          //     </div>
-          //   </MappleToolTip>
-              <Marker key={index}
+              <Marker className='marker' key={index}
             latitude={busData.latitude}
             longitude={busData.longitude}>
             <div className={busData.direction}>
@@ -65,6 +54,14 @@ class Map extends Component {
           </Marker>
               
         ))}
+
+        <div style={{position: 'absolute', right: 0}}>
+          <NavigationControl onViewportChange={viewport => {
+          this.setState({ viewport })
+        }} />
+        </div>
+
+      <Legend className='legend' containerComponent={this.props.containerComponent} />
       </ReactMapGL>
     );
   }
