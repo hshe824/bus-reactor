@@ -5,11 +5,13 @@
   "dependencies": {
     "dotenv": "^5.0.0",
     "mapbox-gl": "^0.44.1",
+    "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-map-gl": "^3.2.4",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.1",
+    "reactjs-mappletooltip": "^1.4.63",
     "superagent": "^3.8.2"
   },
   "scripts": {

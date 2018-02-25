@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import ReactMapGL,{Marker} from 'react-map-gl';
+import ReactMapGL, { Marker, Popup, experimental,NavigationControl} from 'react-map-gl';
 
+// var MappleToolTip = require('reactjs-mappletooltip');
+import MappleToolTip from 'reactjs-mappletooltip';
 const request = require('superagent');
 
 const ACCESS_TOKEN = 'pk.eyJ1IjoicnlzaG56IiwiYSI6ImNqZTIwbWljdTFlOXMycXFseXdoZTdhMHoifQ.EaRv0yYowqeNviNdcgL-PQ' // Mapbox access token
-const TRANSLINK_API_URL ='http://api.translink.ca/rttiapi/v1/buses?apikey=iE0h8jkaEpNFmV7PrYXG';
+const TRANSLINK_API_URL = 'http://api.translink.ca/rttiapi/v1/buses?apikey=iE0h8jkaEpNFmV7PrYXG';
 
 class Map extends Component {
 
@@ -18,7 +20,7 @@ class Map extends Component {
         longitude: -123.117362,
         zoom: 11
       },
-      busDataArray : []
+      busDataArray: []
     };
   }
 
@@ -26,85 +28,97 @@ class Map extends Component {
     const { viewport } = this.state;
 
     return (
-        <ReactMapGL
-          {...viewport}
-          style={{ width: '400px', height: '400px' }}
-          mapboxApiAccessToken={ACCESS_TOKEN}
-          mapStyle="mapbox://styles/mapbox/streets-v10"
-          drag rotate
-          onViewportChange={viewport => {
-            this.setState({ viewport })
-          }}>
-          {/* <Layer type="symbol">
-					  {this.props.eventMarkers.map(this._renderMarkers)}
-          </Layer>   */}
-          {/* <Marker latitude={49.237368} longitude={-123.117362} offsetLeft={-20} offsetTop={-10}>
-          <div className="busImage"></div>
-          </Marker> */}
+      
+      <ReactMapGL
+        {...viewport}
+        style={{ width: '400px', height: '400px' }}
+        mapboxApiAccessToken={ACCESS_TOKEN}
+        mapStyle="mapbox://styles/mapbox/streets-v10"
+        drag rotate
+        onViewportChange={viewport => {
+          this.setState({ viewport })
+        }}>
+        <div style={{position: 'absolute', right: 0}}>
+          <NavigationControl onViewportChange={viewport => {
+          this.setState({ viewport })
+        }} />
+        </div>
 
-           {this.state.busDataArray.map ((busData) => (
-            <Marker 
-            latitude={busData.latitude} 
-            longitude={busData.longitude} 
-            offsetLeft={-20} 
-            offsetTop={-10}>
-            <div className="busImage"></div>
-            </Marker>
-))}
-          </ReactMapGL> 
-        );
+        {this.state.busDataArray.map((busData, index) => (
+          
+          // <MappleToolTip key={index} float={true} mappleType={'ching'}>
+          //     <div>
+          //     </div>
+          //     <div>
+          //       Route #: {busData.routeNo} <br />
+          //       Dir: {busData.direction}<br />
+          //     </div>
+          //   </MappleToolTip>
+              <Marker 
+            latitude={busData.latitude}
+            longitude={busData.longitude}>
+            <div className={busData.direction}>
+              
+            </div>
+            
+          </Marker>
+              
+        ))}
+      </ReactMapGL>
+    );
   }
 
 
 
   componentDidMount() {
+   // this.timer = setInterval(() => this.getBusLocations(), 1000)
     this.getBusLocations()
   }
 
-  
 
-  processBusLocations(body){
+
+  processBusLocations(body) {
     var busData = this.parseJSON(body)
     this.updateBusData(busData)
-   
+
   }
 
-  updateBusData(busData){
+  updateBusData(busData) {
     this.setState(
-      {busDataArray:busData}
+      { busDataArray: busData }
     )
-    console.log('Bus Data:',busData)
+    // console.log('Bus Data:',busData)
   }
 
 
-  parseJSON(json){
+  parseJSON(json) {
     var busData = json.map((bus) =>
-    (
-      {latitude : bus.Latitude,
-    longitude : bus.Longitude,
-    routeNo : bus.RouteNo,
-    destination : bus.Destination,
-    direction : bus.Direction
-    }
-  ));
+      (
+        {
+          latitude: bus.Latitude,
+          longitude: bus.Longitude,
+          routeNo: bus.RouteNo,
+          destination: bus.Destination,
+          direction: bus.Direction
+        }
+      ));
 
     return busData;
-     
+
   }
 
 
-  getBusLocations() {
-     request
-    .get(TRANSLINK_API_URL)
-    .set('Accept', 'application/json')
-    .buffer(true)
-    .end((err, res) => {
-      if (err || res.statusCode !== 200){
-        console.log(err)
-      } else{
-      this.processBusLocations(res.body)
-      }
-    });
+  async getBusLocations() {
+    request
+      .get(TRANSLINK_API_URL)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        if (err || res.statusCode !== 200) {
+          console.log(err)
+        } else {
+          this.processBusLocations(res.body)
+        }
+      });
   }
 }
 

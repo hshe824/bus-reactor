@@ -2,28 +2,29 @@
   text-align: center;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.mapboxgl-marker {
-  background-image: url(https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwib-O-_0cDZAhUG0WMKHRp-Cu8QjRx6BAgAEAY&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F134058%2Fbus_icon&psig=AOvVaw1tRnBnKiIYS6AVDQ8xzw9o&ust=1519633334067187);
+div.EAST {
+  background-image: url(icons/bus_east.png);
   background-size: 100%;
   width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
+  height: 20px;
 }
+​
+div.NORTH {
+  background-image: url(icons/bus_north.png);
+  background-size: 100%;
+  width: 20px;
+  height: 50px;
+}​
 
-div.busImage {
-  background-image: url(bus_left.png);
+div.SOUTH {
+  background-image: url(icons/bus_south.png);
+  background-size: 100%;
+  width: 20px;
+  height: 50px;
+}​
+
+div.WEST {
+  background-image: url(icons/bus_west.png);
   background-size: 100%;
   width: 50px;
   height: 20px;
@@ -31,12 +32,15 @@ div.busImage {
 
 .mapboxgl-popup {
   max-width: 200px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
 .mapboxgl-popup-content {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
+
+
 
 
 
