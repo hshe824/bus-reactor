@@ -38,9 +38,19 @@ class Map extends Component {
           {/* <Layer type="symbol">
 					  {this.props.eventMarkers.map(this._renderMarkers)}
           </Layer>   */}
-          <Marker latitude={49.237368} longitude={-123.117362} offsetLeft={-20} offsetTop={-10}>
+          {/* <Marker latitude={49.237368} longitude={-123.117362} offsetLeft={-20} offsetTop={-10}>
           <div className="busImage"></div>
-          </Marker>
+          </Marker> */}
+
+           {this.state.busDataArray.map ((busData) => (
+            <Marker 
+            latitude={busData.latitude} 
+            longitude={busData.longitude} 
+            offsetLeft={-20} 
+            offsetTop={-10}>
+            <div className="busImage"></div>
+            </Marker>
+))}
           </ReactMapGL> 
         );
   }
@@ -63,7 +73,7 @@ class Map extends Component {
     this.setState(
       {busDataArray:busData}
     )
-    console.log('Bus Positions',busData)
+    console.log('Bus Data:',busData)
   }
 
 
