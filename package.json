@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dotenv": "^5.0.0",
+    "mapbox-gl": "^0.44.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-map-gl": "^3.2.4",
     "react-scripts": "1.1.1"
   },
   "scripts": {
