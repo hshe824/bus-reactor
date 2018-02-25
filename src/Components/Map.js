@@ -14,8 +14,8 @@ class Map extends Component {
     super()
     this.state = {
       viewport: {
-        width: 1380,
-        height: 720,
+        width: window.innerWidth,
+        height: window.innerHeight,
         latitude: 49.237368,
         longitude: -123.117362,
         zoom: 11
@@ -30,10 +30,9 @@ class Map extends Component {
     const { viewport } = this.state;
 
     return (
-      
       <ReactMapGL
         {...viewport}
-        style={{ width: '400px', height: '400px' }}
+        style={{ width: window.innerWidth, height: window.innerHeight }}
         mapboxApiAccessToken={ACCESS_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         drag rotate
@@ -56,7 +55,7 @@ class Map extends Component {
           //       Dir: {busData.direction}<br />
           //     </div>
           //   </MappleToolTip>
-              <Marker 
+              <Marker key={index}
             latitude={busData.latitude}
             longitude={busData.longitude}>
             <div className={busData.direction}>
@@ -73,8 +72,8 @@ class Map extends Component {
 
 
   componentDidMount() {
-   // this.timer = setInterval(() => this.getBusLocations(), 1000)
-    this.getBusLocations()
+   this.timer = setInterval(() => this.getBusLocations(), 1500)
+    // this.getBusLocations()
   }
 
 

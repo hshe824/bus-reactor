@@ -2,33 +2,60 @@
   text-align: center;
 }
 
-div.EAST {
+
+
+.EAST {
   background-image: url(icons/bus_east.png);
   background-size: 100%;
   width: 40px;
   height: 16.25px;
+  background-position: center; 
+  opacity: 0.9;
 }
-​
-div.NORTH {
+
+.EAST:hover {
+  transform: scale(1.25, 1.25); 
+  opacity: 1;
+}
+
+.NORTH {
   background-image: url(icons/bus_north.png);
   background-size: 100%;
   height: 40px;
   width: 16.25px;
+  opacity: 0.9;
 }​
 
-div.SOUTH {
+.NORTH:hover {
+  transform: scale(1.25, 1.25); 
+  opacity: 1;
+}
+
+.SOUTH {
   background-image: url(icons/bus_south.png);
   background-size: 100%;
   height: 40px;
   width: 16.25px;
+  opacity: 0.9;
 }​
 
-div.WEST {
+.SOUTH:hover {
+  transform: scale(1.25, 1.25); 
+  opacity: 1;
+}
+
+.WEST {
   background-image: url(icons/bus_west.png);
   background-size: 100%;
   width: 40px;
   height: 16.25px;
+  opacity: 0.9;
 }​
+
+.WEST:hover {
+  transform: scale(1.25, 1.25); 
+  opacity: 1;
+}
 
 .mapboxgl-popup {
   max-width: 200px;
