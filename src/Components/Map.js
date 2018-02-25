@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import superagent from 'superagent';
-import MapGL from 'react-map-gl';
+import ReactMapGL,{Marker} from 'react-map-gl';
 
 const request = require('superagent');
 
@@ -18,7 +17,8 @@ class Map extends Component {
         latitude: 49.237368,
         longitude: -123.117362,
         zoom: 11
-      }
+      },
+      busDataArray : []
     };
   }
 
@@ -26,19 +26,26 @@ class Map extends Component {
     const { viewport } = this.state;
 
     return (
-      <div>
-        <MapGL
+        <ReactMapGL
           {...viewport}
           style={{ width: '400px', height: '400px' }}
           mapboxApiAccessToken={ACCESS_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v10"
+          drag rotate
           onViewportChange={viewport => {
             this.setState({ viewport })
-          }
-          }
-        />
-      </div>)   
+          }}>
+          {/* <Layer type="symbol">
+					  {this.props.eventMarkers.map(this._renderMarkers)}
+          </Layer>   */}
+          <Marker latitude={49.237368} longitude={-123.117362} offsetLeft={-20} offsetTop={-10}>
+          <div className="busImage"></div>
+          </Marker>
+          </ReactMapGL> 
+        );
   }
+
+
 
   componentDidMount() {
     this.getBusLocations()
@@ -48,12 +55,31 @@ class Map extends Component {
 
   processBusLocations(body){
     var busData = this.parseJSON(body)
+    this.updateBusData(busData)
    
+  }
+
+  updateBusData(busData){
+    this.setState(
+      {busDataArray:busData}
+    )
+    console.log('Bus Positions',busData)
   }
 
 
   parseJSON(json){
-    console.log(json)
+    var busData = json.map((bus) =>
+    (
+      {latitude : bus.Latitude,
+    longitude : bus.Longitude,
+    routeNo : bus.RouteNo,
+    destination : bus.Destination,
+    direction : bus.Direction
+    }
+  ));
+
+    return busData;
+     
   }
 
 
@@ -63,8 +89,12 @@ class Map extends Component {
     .set('Accept', 'application/json')
     .buffer(true)
     .end((err, res) => {
+      if (err || res.statusCode !== 200){
+        console.log(err)
+      } else{
       this.processBusLocations(res.body)
-   });
+      }
+    });
   }
 }
 

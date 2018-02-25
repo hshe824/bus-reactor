@@ -26,3 +26,33 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.mapboxgl-marker {
+  background-image: url(https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwib-O-_0cDZAhUG0WMKHRp-Cu8QjRx6BAgAEAY&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F134058%2Fbus_icon&psig=AOvVaw1tRnBnKiIYS6AVDQ8xzw9o&ust=1519633334067187);
+  background-size: 100%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+div.busImage {
+  background-image: url(https://image.freepik.com/free-icon/a-bus_318-2038.jpg);
+  background-size: 100%;
+  width: 50px;
+  height: 50px;
+}​
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+
+
