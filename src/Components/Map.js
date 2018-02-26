@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import ReactMapGL, { Marker, Popup, experimental,NavigationControl} from 'react-map-gl';
+import ReactMapGL, { Marker, Popup, NavigationControl} from 'react-map-gl';
+import Legend from './legend';
+import BusMarker from './busMarker';
+import BusInfo from './busInfo';
 
-// var MappleToolTip = require('reactjs-mappletooltip');
-import MappleToolTip from 'reactjs-mappletooltip';
 const request = require('superagent');
 
 const ACCESS_TOKEN = 'pk.eyJ1IjoicnlzaG56IiwiYSI6ImNqZTIwbWljdTFlOXMycXFseXdoZTdhMHoifQ.EaRv0yYowqeNviNdcgL-PQ' // Mapbox access token
@@ -10,60 +11,70 @@ const TRANSLINK_API_URL = 'http://api.translink.ca/rttiapi/v1/buses?apikey=iE0h8
 
 class Map extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       viewport: {
-        width: 1380,
-        height: 720,
+        width: this.props.width || window.innerWidth,
+        height: this.props.height -100|| window.innerHeight-100,
         latitude: 49.237368,
         longitude: -123.117362,
         zoom: 11
       },
-      busDataArray: []
+      busDataArray: [],
+      popupInfo: null
     };
   }
+
+  _renderPopup() {
+    const {popupInfo} = this.state;
+    return popupInfo && (
+      <Popup tipSize={5}
+        anchor="top"
+        longitude={popupInfo.longitude}
+        latitude={popupInfo.latitude}
+        onClose={() => this.setState({popupInfo: null})} 
+        >
+        <BusInfo info={popupInfo} />
+      </Popup>
+    );
+}
+
+
 
   render() {
     const { viewport } = this.state;
 
     return (
-      
       <ReactMapGL
         {...viewport}
-        style={{ width: '400px', height: '400px' }}
+        style={{ width: window.innerWidth, height: window.innerHeight }}
         mapboxApiAccessToken={ACCESS_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         drag rotate
         onViewportChange={viewport => {
           this.setState({ viewport })
         }}>
+       
+
+        {this.state.busDataArray.map((busData, index) => (
+              <Marker className='marker' key={index}
+              captureClick={false}
+            latitude={busData.latitude}
+            longitude={busData.longitude}>
+             <BusMarker onClick={() => this.setState({popupInfo: busData})} direction={busData.direction} />
+          </Marker>
+              
+        ))}
+        {this._renderPopup()}
+
         <div style={{position: 'absolute', right: 0}}>
           <NavigationControl onViewportChange={viewport => {
           this.setState({ viewport })
         }} />
         </div>
 
-        {this.state.busDataArray.map((busData, index) => (
-          
-          // <MappleToolTip key={index} float={true} mappleType={'ching'}>
-          //     <div>
-          //     </div>
-          //     <div>
-          //       Route #: {busData.routeNo} <br />
-          //       Dir: {busData.direction}<br />
-          //     </div>
-          //   </MappleToolTip>
-              <Marker 
-            latitude={busData.latitude}
-            longitude={busData.longitude}>
-            <div className={busData.direction}>
-              
-            </div>
-            
-          </Marker>
-              
-        ))}
+      <Legend containerComponent={this.props.containerComponent} />
       </ReactMapGL>
     );
   }
@@ -71,21 +82,21 @@ class Map extends Component {
 
 
   componentDidMount() {
-   // this.timer = setInterval(() => this.getBusLocations(), 1000)
-    this.getBusLocations()
+   this.timer = setInterval(() => this.getBusLocations(), 500)
+    //  this.getBusLocations()
   }
 
 
 
   processBusLocations(body) {
-    var busData = this.parseJSON(body)
-    this.updateBusData(busData)
+    var data = this.parseJSON(body)
+    this.updateBusDataArray(data)
 
   }
 
-  updateBusData(busData) {
+  updateBusDataArray(data) {
     this.setState(
-      { busDataArray: busData }
+      { busDataArray: data }
     )
     // console.log('Bus Data:',busData)
   }

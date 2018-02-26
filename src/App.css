@@ -1,33 +1,13 @@
-.App {
-  text-align: center;
-}
 
-div.EAST {
-  background-image: url(icons/bus_east.png);
-  background-size: 100%;
-  width: 50px;
-  height: 20px;
-}
-​
-div.NORTH {
-  background-image: url(icons/bus_north.png);
-  background-size: 100%;
-  width: 20px;
-  height: 50px;
-}​
+.navStyle {
+  position: 'absolute'; 
+  right: 0;
+};
 
-div.SOUTH {
-  background-image: url(icons/bus_south.png);
-  background-size: 100%;
-  width: 20px;
-  height: 50px;
-}​
-
-div.WEST {
-  background-image: url(icons/bus_west.png);
-  background-size: 100%;
-  width: 50px;
-  height: 20px;
+.busicon {
+ 
+  height: 40px;
+  width: 16.25px;
 }​
 
 .mapboxgl-popup {
