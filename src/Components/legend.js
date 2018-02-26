@@ -8,8 +8,8 @@ export default class Legend extends PureComponent {
 
     return (
       <Container>
-        <div style={{position: 'fixed',bottom: '0', left: '0'}}>
-          <img className = 'legend' src={ require('../icons/legend.png')} width='200' height='280'/>
+        <div style={{position: 'fixed',top: '0', left: '0'}}>
+          <img alt="" className = 'legend' src={ require('../icons/legend.png')} width='200' height='280'/>
         </div>
       </Container>
     );

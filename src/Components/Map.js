@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import ReactMapGL, { Marker, Popup, experimental,NavigationControl} from 'react-map-gl';
+import ReactMapGL, { Marker, Popup, NavigationControl} from 'react-map-gl';
 import Legend from './legend';
-import MappleToolTip from 'reactjs-mappletooltip';
+import BusMarker from './busMarker';
+import BusInfo from './busInfo';
+
 const request = require('superagent');
-
-
-
 
 const ACCESS_TOKEN = 'pk.eyJ1IjoicnlzaG56IiwiYSI6ImNqZTIwbWljdTFlOXMycXFseXdoZTdhMHoifQ.EaRv0yYowqeNviNdcgL-PQ' // Mapbox access token
 const TRANSLINK_API_URL = 'http://api.translink.ca/rttiapi/v1/buses?apikey=iE0h8jkaEpNFmV7PrYXG';
@@ -17,14 +16,29 @@ class Map extends Component {
     this.state = {
       viewport: {
         width: this.props.width || window.innerWidth,
-        height: this.props.height || window.innerHeight,
+        height: this.props.height -100|| window.innerHeight-100,
         latitude: 49.237368,
         longitude: -123.117362,
         zoom: 11
       },
-      busDataArray: []
+      busDataArray: [],
+      popupInfo: null
     };
   }
+
+  _renderPopup() {
+    const {popupInfo} = this.state;
+    return popupInfo && (
+      <Popup tipSize={5}
+        anchor="top"
+        longitude={popupInfo.longitude}
+        latitude={popupInfo.latitude}
+        onClose={() => this.setState({popupInfo: null})} 
+        >
+        <BusInfo info={popupInfo} />
+      </Popup>
+    );
+}
 
 
 
@@ -45,15 +59,14 @@ class Map extends Component {
 
         {this.state.busDataArray.map((busData, index) => (
               <Marker className='marker' key={index}
+              captureClick={false}
             latitude={busData.latitude}
             longitude={busData.longitude}>
-            <div className={busData.direction}>
-              
-            </div>
-            
+             <BusMarker onClick={() => this.setState({popupInfo: busData})} direction={busData.direction} />
           </Marker>
               
         ))}
+        {this._renderPopup()}
 
         <div style={{position: 'absolute', right: 0}}>
           <NavigationControl onViewportChange={viewport => {
@@ -61,7 +74,7 @@ class Map extends Component {
         }} />
         </div>
 
-      <Legend className='legend' containerComponent={this.props.containerComponent} />
+      <Legend containerComponent={this.props.containerComponent} />
       </ReactMapGL>
     );
   }
@@ -69,21 +82,21 @@ class Map extends Component {
 
 
   componentDidMount() {
-   this.timer = setInterval(() => this.getBusLocations(), 1500)
-    // this.getBusLocations()
+   this.timer = setInterval(() => this.getBusLocations(), 500)
+    //  this.getBusLocations()
   }
 
 
 
   processBusLocations(body) {
-    var busData = this.parseJSON(body)
-    this.updateBusData(busData)
+    var data = this.parseJSON(body)
+    this.updateBusDataArray(data)
 
   }
 
-  updateBusData(busData) {
+  updateBusDataArray(data) {
     this.setState(
-      { busDataArray: busData }
+      { busDataArray: data }
     )
     // console.log('Bus Data:',busData)
   }
