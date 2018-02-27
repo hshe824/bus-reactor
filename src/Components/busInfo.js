@@ -1,18 +1,22 @@
-import React, {PureComponent} from 'react';
+import React, { Component } from 'react';
 
-export default class BusInfo extends PureComponent {
+/**
+ * Class the represents the information shown in the toggleable popup of each bus marker
+ * @class
+ */
+export default class BusInfo extends Component {
 
   render() {
-    const {info} = this.props;
+    const { info } = this.props;
     return (
-        <div>
+      <div>
         <div>
           Route #: {info.routeNo}
         </div>
         <div>
-            Destination: {info.destination}
+          Destination: {info.destination}
         </div>
-        </div>
+      </div>
     );
   }
 }
