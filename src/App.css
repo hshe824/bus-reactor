@@ -1,27 +1,25 @@
 
-.navStyle {
-  position: 'absolute'; 
-  right: 0;
-};
+  .navStyle {
+  right : 0;
+  }
+  .mapboxgl-popup {
+  max-width : 200px;
+  font : 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  }
+  .mapboxgl-popup-content {
+  text-align : center;
+  font-family : 'Open Sans', sans-serif;
+  }
 
-.busicon {
- 
-  height: 40px;
-  width: 16.25px;
-}​
+  .businfoShort {
+  height : 16.25px;
+  width : 40px;
+  transform: translate(-20px,-8px);
+  } 
 
-.mapboxgl-popup {
-  max-width: 200px;
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-
-.mapboxgl-popup-content {
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
-}
-
-
-
-
-
-
+  .businfoLong {
+    height : 40px;
+    width : 16.25px;
+    transform: translate(-8px,-20px);
+  }
+  
