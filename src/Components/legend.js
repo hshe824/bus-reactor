@@ -1,17 +1,15 @@
-import React, {PureComponent} from 'react';
+import React, { Component } from 'react';
 
-const defaultContainer =  ({children}) => <div className="legend">{children}</div>;
-
-export default class Legend extends PureComponent {
+/**
+ * Class the represents the bus direction legend that shows on the map
+ * @class
+ */
+export default class Legend extends Component {
   render() {
-    const Container = this.props.containerComponent || defaultContainer;
-
     return (
-      <Container>
-        <div style={{position: 'fixed',top: '0', left: '0'}}>
-          <img alt="" className = 'legend' src={ require('../icons/legend.png')} width='200' height='280'/>
+        <div className='busLegendDiv'>
+          <img className='legendImage' alt="" src={require('../icons/legend.png')} />
         </div>
-      </Container>
     );
   }
 }
