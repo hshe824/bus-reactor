@@ -11,14 +11,14 @@ export default class BusMarker extends Component {
     const { onClick, direction } = this.props;
 
     // Set the icon based on the direction the bus is travelling in
-    let className = "businfoShort";
+    let className = "busMarkerShort";
     if (direction == "NORTH" || direction == "SOUTH") {
-      className = "businfoLong";
+      className = "busMarkerLong";
     }
 
     return (
       <img className={className} alt=''
-        onClick={onClick} src={require('../icons/bus_' + direction + '.png')}>
+        onClick={onClick} src={require('../icons/bus_' + direction.toLowerCase() + '.png')}>
       </img>
     );
   }
