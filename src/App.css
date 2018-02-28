@@ -9,19 +9,19 @@
   font-family : 'Open Sans', sans-serif;
   }
 
-  .businfoShort {
+  .busMarkerShort {
   height : 16.25px;
   width : 40px;
   transform: translate(-20px,-8px);
   z-index: -1;
   } 
 
-  .businfoLong {
+  .busMarkerLong {
     height : 40px;
     width : 16.25px;
     transform: translate(-8px,-20px);
     z-index: -1;
-  }
+  }  
 
   .busLegendDiv {
     position:fixed;
