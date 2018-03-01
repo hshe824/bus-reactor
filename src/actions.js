@@ -31,6 +31,7 @@ export function updatePopupInfo(popupInfo){
   };
 }
 
+//Call the Translink API to fetch bus locations
 export function fetchBusData(data) {
     return (dispatch) => {
       request
@@ -38,15 +39,16 @@ export function fetchBusData(data) {
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (err || res.statusCode !== 200) {
-          dispatch(busesHaveErrored(true))
+          dispatch(busesHaveErrored(true));
         } else {
-          dispatch(processBusLocations(res.body))
+          dispatch(processBusLocations(res.body));
         }
       });
 
     }
   }
 
+//Map the attributes we are interested in from the response
 export function processBusLocations(buses) {
   return (dispatch) => {
   var busData = buses.map((bus) =>
@@ -59,6 +61,6 @@ export function processBusLocations(buses) {
       direction: bus.Direction
     }
   ));
-  dispatch(busFetchDataSuccess(busData))
+  dispatch(busFetchDataSuccess(busData));
 }
 }
