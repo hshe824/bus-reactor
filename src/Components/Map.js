@@ -16,14 +16,15 @@ const TRANSLINK_API_URL = 'http://api.translink.ca/rttiapi/v1/buses?apikey=iE0h8
 class Map extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this._renderBusMarker = this._renderBusMarker.bind(this);
     this._renderBusPopup = this._renderBusPopup.bind(this);
   }
 
   //Fetch new API bus data every 500ms
   componentDidMount() {
-    this.timer = setInterval(() => this.props.fetchData(TRANSLINK_API_URL), 500)
+    this.props.fetchData(TRANSLINK_API_URL);
+    this.timer = setInterval(() => this.props.fetchData(TRANSLINK_API_URL), 500);
   }
 
   render() {

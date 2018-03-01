@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 
 const initialViewport = {
-
     width: window.innerWidth,
     height: window.innerHeight,
     //Vancouver's coordinates
