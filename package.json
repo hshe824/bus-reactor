@@ -11,8 +11,12 @@
     "react-map-gl": "^3.2.4",
     "react-native": "^0.53.3",
     "react-redux": "^5.0.7",
+    "react-redux-mapbox-gl": "^1.0.7",
     "react-scripts": "1.1.1",
     "reactjs-mappletooltip": "^1.4.63",
+    "redux": "^3.7.2",
+    "redux-map-gl": "^0.1.0",
+    "redux-thunk": "^2.2.0",
     "superagent": "^3.8.2"
   },
   "scripts": {
