@@ -12,7 +12,7 @@ export default class BusMarker extends Component {
 
     // Set the icon based on the direction the bus is travelling in
     let className = "busMarkerShort";
-    if (direction == "NORTH" || direction == "SOUTH") {
+    if (direction === "NORTH" || direction === "SOUTH") {
       className = "busMarkerLong";
     }
 
